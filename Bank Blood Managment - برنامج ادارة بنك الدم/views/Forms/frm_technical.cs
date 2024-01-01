@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Bank_Blood_Managment___برنامج_ادارة_بنك_الدم.views.interfaace;
+using Bank_Blood_Managment___برنامج_ادارة_بنك_الدم.Logic.presenter;
 
 namespace Bank_Blood_Managment___برنامج_ادارة_بنك_الدم.views.Forms
 {
@@ -29,11 +30,182 @@ namespace Bank_Blood_Managment___برنامج_ادارة_بنك_الدم.views.F
         object Itechnical.btn_save { get => btn_save.Enabled; set => btn_save.Enabled = Convert.ToBoolean(value); }
         object Itechnical.btn_delete { get => btn_delete.Enabled; set => btn_delete.Enabled = Convert.ToBoolean(value); }
         object Itechnical.btn_deleteall { get => btn_deleteall.Enabled; set => btn_deleteall.Enabled = Convert.ToBoolean(value); }
+        public object dataGridView { get => Dgv_search.DataSource; set => Dgv_search.DataSource=value; }
 
         public int row;
- public frm_technical()
+        TechnicalPresenter TechPresenter;
+        public frm_technical()
         {
             InitializeComponent();
+            TechPresenter = new TechnicalPresenter(this);
+
+        }
+
+        private void frm_technical_Load(object sender, EventArgs e)
+        {
+            TechPresenter.AutoNumber();
+        }
+
+        private void btn_add_Click(object sender, EventArgs e)
+        {
+            if (txt_Name.Text == "")
+            {
+                MessageBox.Show("من فضلك ادخل اسم الفني", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            if (txt_phone.Text == "")
+            {
+                MessageBox.Show("من فضلك ادخل هاتف الفني", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            if (txt_address.Text == "")
+            {
+                MessageBox.Show("من فضلك ادخل عنوان الفني", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            bool check = TechPresenter.technicalInsert();
+            if (check)
+            {
+                MessageBox.Show("تم اضافة الفني ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TechPresenter.AutoNumber();
+            }
+            else
+            {
+                MessageBox.Show("هناك خطأ لم يتم اضافة الفني ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_save_Click(object sender, EventArgs e)
+        {
+            if (txt_Name.Text == "")
+            {
+                MessageBox.Show("من فضلك ادخل اسم الفني", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            if (txt_phone.Text == "")
+            {
+                MessageBox.Show("من فضلك ادخل هاتف الفني", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            if (txt_address.Text == "")
+            {
+                MessageBox.Show("من فضلك ادخل عنوان الفني", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            bool check = TechPresenter.technicalUpdate();
+            if (check)
+            {
+                MessageBox.Show("تم تعديل بيانات الفني ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TechPresenter.AutoNumber();
+            }
+            else
+            {
+                MessageBox.Show("هناك خطأ لم يتم تعديل بيانات الفني ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_delete_Click(object sender, EventArgs e)
+        {
+            bool check = TechPresenter.technicaldelete();
+            if (check)
+            {
+                MessageBox.Show("تم حذف بيانات الفني ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TechPresenter.AutoNumber();
+            }
+            else
+            {
+                MessageBox.Show("هناك خطأ لم يتم حذف بيانات الفني ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_deleteall_Click(object sender, EventArgs e)
+        {
+            bool check = TechPresenter.technicaldeleteall();
+            if (check)
+            {
+                MessageBox.Show("تم حذف  الكل ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TechPresenter.AutoNumber();
+            }
+            else
+            {
+                MessageBox.Show("هناك خطأ لم يتم حذف الكل ", "تأكيد", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_first_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                row = 0;
+                TechPresenter.getrow(row);
+            }
+            catch (Exception) { }
+        }
+
+        private void btn_priv_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                int countrow = Convert.ToInt32(TechPresenter.Getlastrow().Rows[0][0]) - 1;
+                if (row == 0)
+                {
+                    row = countrow;
+                }
+                else
+                {
+                    row = row - 1;
+
+                }
+
+                TechPresenter.getrow(row);
+            }
+            catch (Exception) { }
+        }
+
+        private void btn_next_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                int countrow = Convert.ToInt32(TechPresenter.Getlastrow().Rows[0][0]) - 1;
+                if (countrow == row)
+                {
+                    row = 0;
+                }
+                else
+                {
+                    row = row + 1;
+
+                }
+
+                TechPresenter.getrow(row);
+            }
+            catch (Exception) { }
+        }
+
+        private void btn_last_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int countlastrow = Convert.ToInt32(TechPresenter.Getlastrow().Rows[0][0]) - 1;
+                row = countlastrow;
+
+                TechPresenter.getrow(row);
+            }
+            catch (Exception) { }
+        }
+
+        private void btn_new_Click(object sender, EventArgs e)
+        {
+            frm_technical_Load(null, null);
         }
     }
 }

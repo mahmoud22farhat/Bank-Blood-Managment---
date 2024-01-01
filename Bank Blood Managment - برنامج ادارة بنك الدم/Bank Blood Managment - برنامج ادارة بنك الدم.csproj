@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,9 +66,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\presenter\BloodBagPresenter.cs" />
+    <Compile Include="Logic\presenter\BloodtypePresenter.cs" />
+    <Compile Include="Logic\presenter\TechnicalPresenter.cs" />
+    <Compile Include="Logic\presenter\UnreadyBloodBagPresenter.cs" />
+    <Compile Include="Logic\services\BloodBagServices.cs" />
+    <Compile Include="Logic\services\BloodTypeServices.cs" />
+    <Compile Include="Logic\services\DBHelper.cs" />
+    <Compile Include="Logic\services\TechnicalServices.cs" />
+    <Compile Include="Logic\services\UnreadyBloodBagServices.cs" />
+    <Compile Include="Models\BloodBagModel.cs" />
+    <Compile Include="Models\BloodtypeModel.cs" />
     <Compile Include="Models\technicalModel.cs" />
+    <Compile Include="Models\UnreadyBloodBagModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="views\Forms\frm_BloodBag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\Forms\frm_BloodBag.Designer.cs">
+      <DependentUpon>frm_BloodBag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\Forms\frm_Bloodtype.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\Forms\frm_Bloodtype.Designer.cs">
+      <DependentUpon>frm_Bloodtype.cs</DependentUpon>
+    </Compile>
     <Compile Include="views\Forms\frm_main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,7 +105,16 @@
     <Compile Include="views\Forms\frm_technical.Designer.cs">
       <DependentUpon>frm_technical.cs</DependentUpon>
     </Compile>
+    <Compile Include="views\Forms\frm_UnReadyBloodBag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\Forms\frm_UnReadyBloodBag.Designer.cs">
+      <DependentUpon>frm_UnReadyBloodBag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\interfaace\IBloodBag.cs" />
+    <Compile Include="views\interfaace\IBloodtype.cs" />
     <Compile Include="views\interfaace\Itechnical.cs" />
+    <Compile Include="views\interfaace\IUnreadyBloodBag.cs" />
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,12 +124,22 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="views\Forms\frm_BloodBag.resx">
+      <DependentUpon>frm_BloodBag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\Forms\frm_Bloodtype.resx">
+      <DependentUpon>frm_Bloodtype.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="views\Forms\frm_main.resx">
       <DependentUpon>frm_main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\Forms\frm_technical.resx">
       <DependentUpon>frm_technical.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\Forms\frm_UnReadyBloodBag.resx">
+      <DependentUpon>frm_UnReadyBloodBag.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -94,11 +152,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Logic\presenter\" />
-    <Folder Include="Logic\services\" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
